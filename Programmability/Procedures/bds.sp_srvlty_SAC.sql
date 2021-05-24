@@ -1,9 +1,9 @@
 ﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
 GO
-CREATE PROCEDURE [bds].[sp_srvlty_interfazSAC]
+CREATE PROCEDURE [bds].[sp_srvlty_SAC]
 AS
   /***************************************************************************************************
-  Procedure:          bds.sp_srvlty_interfazSAC
+  Procedure:          [bds].[sp_srvlty_SAC]
   Create Date:        20210521
   Author:             dÁlvarez
   Description:        carga la tabla final (a ser ingestada por SAC).

@@ -1,19 +1,19 @@
 ﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
 GO
 
-CREATE PROCEDURE [stg].[sp_srv_cewDataExcel]
+CREATE PROCEDURE [stg].[xsp_srv_carga_Azureold]
 AS
 /***************************************************************************************************
-Procedure:          stg.sp_carga_cewDataExcel
+Procedure:          stg.sp_carga_cewDataAzure
 Create Date:        20210520
 Author:             dÁlvarez
-Description:        carga el reporte cew_data (GVillacorta) del excel.
+Description:        carga el reporte cew_data (GVillacorta) de Azure.
 Call by:            none
 Affected table(s):  bds.SRV_TABLON
 Used By:            BI
 Parameter(s):       none
 Log:                ctl.CONTROL
-Prerequisites:      En caso del archivo Excel, debe importarse previamente con dbforge
+Prerequisites:      Azure debe estar encendido (ccordinar con GVillacorta)
 ****************************************************************************************************
 SUMMARY OF CHANGES
 Date(YYYYMMDD)      Author              Comments
@@ -32,6 +32,9 @@ Date(YYYYMMDD)      Author              Comments
   DECLARE @s_fld2 NVARCHAR(14);
   DECLARE @i_fld1 INT;
 
+  DECLARE @strgTable NVARCHAR(17);
+  DECLARE @sqlCommand varchar(5000)
+
   SET DATEFIRST 1;
 
   SET @strgFec = CONVERT(VARCHAR, GETDATE(), 112);
@@ -42,85 +45,99 @@ Date(YYYYMMDD)      Author              Comments
 
   SET @prceso = 'CARGATABLA';
   SET @objtnm = 'SRV_TABLON';
-  SET @s_fld1 = 'excel';
+  SET @s_fld1 = 'azure';
 
   SELECT @s_fld2 = MAX(FECHOR) FROM ctl.CONTROL WHERE PRCESO = @prceso AND OBJTNM = @objtnm;
 
   INSERT INTO ctl.CONTROL(PRCESO, OBJTNM, FECHOR, S_FLD1, S_FLD2, S_FLD9)
   VALUES(@prceso,@objtnm,@strgFT,@s_fld1,@s_fld2 ,@strgTim);
 
+
+  --SET @strgTable = CONCAT(@strgFec, '_cew_data');
+
+  SELECT
+    @strgTable = MAX(TABLE_NAME)
+  FROM BD_SRV.INFORMATION_SCHEMA.TABLES
+  WHERE TABLE_CATALOG = 'BD_SRV'
+  AND TABLE_SCHEMA = 'tmp'
+  AND TABLE_NAME LIKE '2%cew_Data';
+
+
   TRUNCATE TABLE stg.SRV_TABLON;
 
-  INSERT INTO stg.SRV_TABLON (ID,
-                              NOMBRE,
-                              RAZONSOCIAL,
-                              NOMBRETIENDA,
-                              CODIGOMALL,
-                              CODIGOTIENDA,
-                              RUCEMISOR,
-                              IDENTIFICADORTERMINAL,
-                              NUMEROTERMINAL,
-                              SERIE,
-                              TIPOTRANSACCION,
-                              NUMEROTRANSACCION,
-                              FECHA,
-                              HORA,
-                              CAJERO,
-                              VENDEDOR,
-                              DNI,
-                              RUC,
-                              NOMBRECLIENTE,
-                              DIRECCIONCLIENTE,
-                              BONUS,
-                              MONEDA,
-                              MEDIOPAGO,
-                              TOTALVALORVENTABRUTA,
-                              DESCUENTOSGLOBAL,
-                              MONTOTOTALIGV,
-                              TOTALVALORVENTANETA,
-                              ORDENITEM,
-                              CANTIDADUNIDADESITEM,
-                              CODIGOPRODUCTO,
-                              DESCRIPCIONPRODUCTO,
-                              PRECIOVENTAUNITARIOITEM,
-                              CARGODESCUENTOITEM,
-                              PRECIOTOTALITEM)
-    SELECT
-      CAST(cd.ID AS VARCHAR(30)) AS c01
-     ,CAST(cd.[Nombre] AS VARCHAR(50)) AS c02
-     ,CAST(cd.[Razón social] AS VARCHAR(50)) AS c03
-     ,CAST(cd.NombreTienda AS VARCHAR(50)) AS c04
-     ,CAST(cd.CodigoMall AS VARCHAR(2)) AS c05
-     ,CAST(cd.CodigoTienda AS VARCHAR(4)) AS c06
-     ,CAST(cd.RucEmisor AS VARCHAR(11)) AS c07
-     ,CAST(cd.IdentificadorTerminal AS VARCHAR(10)) AS c08
-     ,CAST(cd.NumeroTerminal AS VARCHAR(10)) AS c09
-     ,CAST(cd.Serie AS VARCHAR(10)) AS c10
-     ,CAST(cd.TipoTransaccion AS VARCHAR(4)) AS c11
-     ,CAST(cd.NumeroTransaccion AS VARCHAR(10)) AS c12
-     ,CAST(cd.Fecha AS VARCHAR(20)) AS c13
-     ,CAST(cd.Hora AS VARCHAR(20)) AS c14
-     ,CAST(cd.Cajero AS VARCHAR(20)) AS c15
-     ,CAST(cd.Vendedor AS VARCHAR(20)) AS c16
-     ,CAST(cd.DNI AS VARCHAR(11)) AS c17
-     ,CAST(cd.RUC AS VARCHAR(11)) AS c18
-     ,REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cast(cd.[NombreCliente] as varchar(100)), '&amp;','&'), CHAR(13),';'), CHAR(10),';'), CHAR(9),';'), '|',' '), '"','') as c19
-     ,REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cast(cd.[DireccionCliente] as varchar(200)), CHAR(13),';'), CHAR(10),';'), CHAR(9),';'), '|',' '), '"','') as c20
-     ,cast(cd.[Bonus]                 as varchar(10))  as c21
+  SET @sqlCommand = 'INSERT INTO stg.SRV_TABLON (
+  ID,
+  NOMBRE,
+  RAZONSOCIAL,
+  NOMBRETIENDA,
+  CODIGOMALL,
+  CODIGOTIENDA,
+  RUCEMISOR,
+  IDENTIFICADORTERMINAL,
+  NUMEROTERMINAL,
+  SERIE,
+  TIPOTRANSACCION,
+  NUMEROTRANSACCION,
+  FECHA,
+  HORA,
+  CAJERO,
+  VENDEDOR,
+  DNI,
+  RUC,
+  NOMBRECLIENTE,
+  DIRECCIONCLIENTE,
+  BONUS,
+  MONEDA,
+  MEDIOPAGO,
+  TOTALVALORVENTABRUTA,
+  DESCUENTOSGLOBAL,
+  MONTOTOTALIGV,
+  TOTALVALORVENTANETA,
+  ORDENITEM,
+  CANTIDADUNIDADESITEM,
+  CODIGOPRODUCTO,
+  DESCRIPCIONPRODUCTO,
+  PRECIOVENTAUNITARIOITEM,
+  CARGODESCUENTOITEM,
+  PRECIOTOTALITEM)
+  SELECT
+      cast(cd.ID                     as varchar(30))   as c01
+     ,cast(cd.SupPartyName           as varchar(50))   as c02
+     ,cast(cd.SupPartyRegName        as varchar(50))   as c03
+     ,cast(cd.NombreTienda           as varchar(50))   as c04
+     ,cast(cd.CodigoMall             as varchar(2))    as c05
+     ,cast(cd.CodigoTienda           as varchar(4))    as c06
+     ,cast(cd.RucEmisor              as varchar(11))   as c07
+     ,cast(cd.IdentificadorTerminal  as varchar(10))   as c08
+     ,cast(cd.NumeroTerminal         as varchar(10))   as c09
+     ,cast(cd.Serie                  as varchar(10))   as c10
+     ,cast(cd.TipoTransaccion        as varchar(4))    as c11
+     ,cast(cd.NumeroTransaccion      as varchar(10))   as c12
+     ,cast(cd.Fecha                  as varchar(20))   as c13
+     ,cast(cd.Hora                   as varchar(20))   as c14
+     ,cast(cd.Cajero                 as varchar(20))   as c15
+     ,cast(cd.Vendedor               as varchar(20))   as c16
+     ,cast(cd.DNI                    as varchar(11))   as c17
+     ,cast(cd.RUC                    as varchar(11))   as c18
+     ,REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cast(cd.CusPartyRegName as varchar(100)), ''&amp;'',''&''), CHAR(13),'';''), CHAR(10),'';''), CHAR(9),'';''), ''|'','' ''), ''"'','''') as c19
+     ,REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cast(cd.Direccion as varchar(200)), CHAR(13),'';''), CHAR(10),'';''), CHAR(9),'';''), ''|'','' ''), ''"'','''') as c20
+     ,NULL                                             as c21
      ,cast(cd.Moneda                  as varchar(10))  as c22
      ,cast(cd.MedioPago               as varchar(10))  as c23
      ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.TotalValorVentaBruta))         as c24
-     ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.[DescuentosGlobal]))           as c25
+     ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.CargosDescuentosGlobal))       as c25
      ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.MontoTotalIgv))                as c26
      ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.TotalValorVentaNeta))          as c27
-     ,cast(cd.[OrdenItem]             as varchar(20))  as c28
+     ,cast(cd.Orden                   as varchar(20))  as c28
      ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.CantidadUnidadesItem))         as c29
      ,cast(cd.CodigoProducto          as varchar(50))  as c30
-     ,REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cast(cd.DescripcionProducto as varchar(100)), CHAR(13),';'), CHAR(10),';'), CHAR(9),';'), '|',' '), '"','') as c31
+     ,REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cast(cd.DescripcionProducto as varchar(100)), CHAR(13),'';''), CHAR(10),'';''), CHAR(9),'';''), ''|'','' ''), ''"'','''') as c31
      ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.PrecioVentaUnitarioItem))      as c32
      ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.CargoDescuentoItem))           as c33
      ,CONVERT(DECIMAL(18,2),CONVERT(float,cd.PrecioTotalItem))              as c34
-    FROM [BD_SRV].tmp.[excel_cewData] cd;
+    FROM [BD_SRV].tmp.['+@strgTable+'] cd';
+
+  EXEC (@sqlCommand);
 
   TRUNCATE TABLE ods.SRV_TABLON;
 
@@ -137,7 +154,7 @@ Date(YYYYMMDD)      Author              Comments
         ,IIF(SERIE                  ='',NULL,SERIE                  )
         ,IIF(TIPOTRANSACCION        ='',NULL,RIGHT(CONCAT('00',TIPOTRANSACCION),2)        )
         ,IIF(NUMEROTRANSACCION      ='',NULL,NUMEROTRANSACCION      )
-        ,IIF(FECHA                  ='',NULL,LEFT(FECHA,10)         )
+        ,IIF(FECHA                  ='',NULL,FECHA                  )
         ,IIF(HORA                   ='',NULL,HORA                   )
         ,IIF(CAJERO                 ='',NULL,CAJERO                 )
         ,IIF(VENDEDOR               ='',NULL,VENDEDOR               )
