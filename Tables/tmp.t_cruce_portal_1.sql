@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[zt_cruce_portal_1] (
+﻿CREATE TABLE [tmp].[t_cruce_portal_1] (
   [FECHA] [nvarchar](16) NOT NULL,
   [UE] [nvarchar](20) NULL,
   [RUC] [nvarchar](11) NULL,

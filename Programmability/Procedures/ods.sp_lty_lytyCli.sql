@@ -12,11 +12,13 @@ AS
                        - Solo los que tienen número DNI válido.
                       Además crea un campo contador de DNI (muestra errores (mayores a uno))
   Call by:            none
-  Affected table(s):  all
+  Affected table(s):  ods.LYTY_CLI_1
+                      ods.LYTY_CLI_2
+                      ods.LYTY_CLI_3
   Used By:            BI
   Parameter(s):       none
   Log:                none
-  Prerequisites:      none
+  Prerequisites:      stg.sp_lty_lytyCli
   ****************************************************************************************************
   SUMMARY OF CHANGES
   Date(YYYYMMDD)      Author              Comments

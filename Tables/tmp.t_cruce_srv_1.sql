@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[zt_cruce_srv_1] (
+﻿CREATE TABLE [tmp].[t_cruce_srv_1] (
   [FECHA] [nvarchar](8) NOT NULL,
   [UE] [varchar](6) NULL,
   [RUC] [nvarchar](500) NULL,

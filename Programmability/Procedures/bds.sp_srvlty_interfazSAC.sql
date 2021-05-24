@@ -1,16 +1,18 @@
 ﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
 GO
-CREATE PROCEDURE [ods].[sp_srvlty_interfazSAC]
+CREATE PROCEDURE [bds].[sp_srvlty_interfazSAC]
 AS
   /***************************************************************************************************
-  Procedure:          ods.sp_srvlty_interfazSAC
+  Procedure:          bds.sp_srvlty_interfazSAC
   Create Date:        20210521
   Author:             dÁlvarez
   Description:        carga la tabla final (a ser ingestada por SAC).
-                      posteriormente la tabla se exporta en CSV usando dbforge con las sgtes caracteristicas:
-                        separado por caracter |
-                        setear comillas dobles como identificador texto
-                        quitar el string null para campos vacios
+                      posteriormente la tabla se exporta en CSV usando dbeaver con las sgtes caracteristicas:
+                        delimeter: |
+                        quote characters: "
+                        quote always: string
+                        null string: vacio
+                        encoding: UTF-8
   Call by:            none
   Affected table(s):  bds.SRV_LYTY
   Used By:            BI

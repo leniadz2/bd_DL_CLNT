@@ -1,4 +1,4 @@
-﻿CREATE TABLE [bds].[SRV_LYTY] (
+﻿CREATE TABLE [bds].[SRV_LYTY_old] (
   [srv_ID] [varchar](30) NULL,
   [srv_NOMBRE] [varchar](50) NULL,
   [srv_RAZONSOCIAL] [varchar](50) NULL,
@@ -24,7 +24,7 @@
   [srv_MONEDA] [varchar](10) NULL,
   [srv_MEDIOPAGO] [varchar](10) NULL,
   [srv_TOTALVALORVENTABRUTA] [decimal](18, 2) NULL,
-  [srv_DESCUENTOSGLOBAL] [decimal](18, 2) NULL,
+  [srv_DESCUENTOSGLOBAL] [varchar](20) NULL,
   [srv_MONTOTOTALIGV] [decimal](18, 2) NULL,
   [srv_TOTALVALORVENTANETA] [decimal](18, 2) NULL,
   [srv_ORDENITEM] [varchar](20) NULL,

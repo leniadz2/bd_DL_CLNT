@@ -1,4 +1,4 @@
-﻿CREATE TABLE [bds].[SRV_TABLON] (
+﻿CREATE TABLE [bds].[SRV_TABLON_old] (
   [ID] [varchar](30) NULL,
   [NOMBRE] [varchar](50) NULL,
   [RAZONSOCIAL] [varchar](50) NULL,
@@ -23,7 +23,7 @@
   [MONEDA] [varchar](10) NULL,
   [MEDIOPAGO] [varchar](10) NULL,
   [TOTALVALORVENTABRUTA] [decimal](18, 2) NULL,
-  [DESCUENTOSGLOBAL] [decimal](18, 2) NULL,
+  [DESCUENTOSGLOBAL] [varchar](20) NULL,
   [MONTOTOTALIGV] [decimal](18, 2) NULL,
   [TOTALVALORVENTANETA] [decimal](18, 2) NULL,
   [ORDENITEM] [varchar](20) NULL,
