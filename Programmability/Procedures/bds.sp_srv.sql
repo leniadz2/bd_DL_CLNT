@@ -9,7 +9,8 @@ Create Date:        20210524
 Author:             dÁlvarez
 Description:        Carga todas las tablas desde SRV
 Call by:            none
-Affected table(s):  tbd
+Affected table(s):  bds.SRV_TABLON
+                    bds.SRV_CLI
 Used By:            BI
 Parameter(s):       none
 Log:                ctl.CONTROL
@@ -50,6 +51,8 @@ Date(YYYYMMDD)      Author              Comments
   --SET @iVar1 = 1;-- valor 1 = la carga proviende de azure
   SET @iVar1 = 2;-- valor 2 = la carga proviende de excel
 
+  --TABLON-----------------------------
+
   --STG
   IF @iVar1 = 1
     BEGIN
@@ -67,4 +70,16 @@ Date(YYYYMMDD)      Author              Comments
   INSERT INTO bds.SRV_TABLON
   SELECT st.*
     FROM ods.SRV_TABLON st INNER JOIN ods.SRV_TABLON_dlt std ON st.id = std.ID AND st.ORDENITEM = std.ORDENITEM;
+
+  --CLIENTE-----------------------------
+
+  INSERT INTO bds.SRV_CLI
+  SELECT DISTINCT 
+         DNI,
+         RUC, 
+         NOMBRECLIENTE, 
+         DIRECCIONCLIENTE, 
+         BONUS
+    FROM STG.TABLON_SRV;
+
 GO

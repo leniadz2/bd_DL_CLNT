@@ -1,0 +1,32 @@
+﻿CREATE TABLE [ods].[ARA_TRANSAC] (
+  [FUENTE] [nvarchar](4) NULL,
+  [DNI] [varchar](11) NULL,
+  [RUC] [varchar](11) NULL,
+  [COD_CLIENTE_ICG] [int] NULL,
+  [NUMTARJETABONUS] [varchar](19) NULL,
+  [FECHA] [varchar](20) NULL,
+  [HORA] [varchar](20) NULL,
+  [NEGOCIO] [nvarchar](100) NULL,
+  [RAZONSOCIAL] [varchar](50) NULL,
+  [RUCEMISOR] [varchar](11) NULL,
+  [NOMBRETIENDA] [nvarchar](100) NULL,
+  [UBICACION] [nvarchar](100) NULL,
+  [CODIGOTIENDA_SRV] [varchar](4) NULL,
+  [CODIGOCENTRO_ICG] [nvarchar](4) NULL,
+  [CODIGOTIENDA_BONUS] [varchar](4) NULL,
+  [CODIGOPRODUCTO_SRV] [varchar](50) NULL,
+  [CODARTICULO_ICG] [int] NULL,
+  [PLU_BONUS] [varchar](14) NULL,
+  [DESCRIPCIONPRODUCTO] [nvarchar](100) NULL,
+  [CANTIDADUNIDADESITEM] [float] NULL,
+  [PRECIOVENTAUNITARIOITEM] [float] NULL,
+  [CARGODESCUENTOITEM] [float] NULL,
+  [PRECIOTOTALITEM] [float] NULL,
+  [TOTALVALORVENTANETA] [float] NULL,
+  [MONTOTOTALIGV] [float] NULL,
+  [DESCUENTOSGLOBAL] [float] NULL,
+  [TOTALVALORVENTABRUTA] [float] NULL,
+  [MONEDA] [varchar](10) NULL
+)
+ON [PRIMARY]
+GO

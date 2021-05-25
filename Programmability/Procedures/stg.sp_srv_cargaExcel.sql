@@ -22,6 +22,22 @@ Date(YYYYMMDD)      Author              Comments
 
 ***************************************************************************************************/
 
+  /* no funciono el bulk (mucha data sucia en origen)
+  
+  BULK INSERT stg.TABLON_SRV
+  FROM 'C:\BI\BATCH\20210422_SRV\Muestra_locatarios_21042021_V.2.csv'
+  WITH
+  (
+  	FIRSTROW = 2,
+  	FIELDTERMINATOR = ';',
+  	ROWTERMINATOR = '\n'
+  )
+  GO
+
+  */
+
+
+
   SELECT @s_fld2 = MAX(FECHOR) FROM ctl.CONTROL WHERE PRCESO = @prceso AND OBJTNM = @objtnm;
 
   INSERT INTO ctl.CONTROL(PRCESO, OBJTNM, FECHOR, S_FLD1, S_FLD2, S_FLD9)

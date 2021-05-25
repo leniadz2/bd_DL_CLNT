@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[TRANSACCION] (
+﻿CREATE TABLE [ods].[xTRANSACCION] (
   [FUENTE] [nvarchar](4) NULL,
   [DNI] [varchar](11) NULL,
   [RUC] [varchar](11) NULL,

@@ -56,7 +56,7 @@ BEGIN
          MONTO,
          TRX
     into tmp.t_cruce_portal_1
-    from tmp.REPORTE_PORTAL;
+    from tmp.PORTAL_REPORTE;
 
 END
 GO

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[CLIENTE] (
+﻿CREATE TABLE [ods].[xCLIENTE] (
   [FUENTE] [nvarchar](4) NULL,
   [NUMTARJETABONUS] [nvarchar](20) NULL,
   [TIPOTARJETA] [nvarchar](20) NULL,

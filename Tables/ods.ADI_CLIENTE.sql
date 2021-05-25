@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dmg].[CLIENTE] (
+﻿CREATE TABLE [ods].[ADI_CLIENTE] (
   [FUENTE] [nvarchar](4) NULL,
   [NUMTARJETABONUS] [nvarchar](20) NULL,
   [TIPOTARJETA] [nvarchar](20) NULL,

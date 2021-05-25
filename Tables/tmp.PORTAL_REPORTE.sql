@@ -1,4 +1,4 @@
-﻿CREATE TABLE [stg].[PORTAL_REPORTE] (
+﻿CREATE TABLE [tmp].[PORTAL_REPORTE] (
   [CENTRO_COMERCIAL] [nvarchar](50) NULL,
   [MONEDA] [nvarchar](10) NULL,
   [FECHAINICIO] [datetime] NULL,

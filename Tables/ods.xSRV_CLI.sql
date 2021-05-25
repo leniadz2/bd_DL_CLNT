@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[SRV_CLI] (
+﻿CREATE TABLE [ods].[xSRV_CLI] (
   [DNI] [varchar](11) NULL,
   [RUC] [varchar](11) NULL,
   [NOMBRECLIENTE] [varchar](100) NULL,
