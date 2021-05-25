@@ -58,5 +58,27 @@ SELECT CODIGOMALL, COUNT(*)
   FROM bds.SRV_TABLON
  GROUP BY CODIGOMALL;
 
+--contadores de clientes
+SELECT t.srv_codigomall, 
+       COUNT(*) AS conta FROM (
+  SELECT distinct st.srv_codigomall, st.lty_NUMTARJETABONUS
+    FROM bds.SRV_lyty st
+  -- WHERE st.lty_NUMTARJETABONUS IS NOT NULL
+  ) AS t
+   GROUP BY t.srv_codigomall
+
+--01	3765
+--02	2415
+
+SELECT t.srv_codigomall, 
+       COUNT(*) AS conta FROM (
+  SELECT distinct st.srv_codigomall, st.srv_DNI
+    FROM bds.SRV_lyty st
+   WHERE st.srv_DNI_Valido = 1) AS t
+   GROUP BY t.srv_codigomall
+
+--01	11248
+--02	7160
+
 
 GO
