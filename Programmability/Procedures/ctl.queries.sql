@@ -157,6 +157,6 @@ SELECT COUNT(*) FROM dbo.t_SRV_valCorrel;
 SELECT * FROM dbo.t_SRV_valCorrel_1;
 SELECT COUNT(*) FROM dbo.t_SRV_valCorrel_2;
 
-
+Select [NAME] from sysobjects where type = 'P' and category = 0
   */
 GO
