@@ -66,12 +66,14 @@ Date(YYYYMMDD)      Author              Comments
       EXEC stg.sp_srv_cargaExcel @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
       EXEC ods.sp_srv_carga @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
     END
-
+--ACA  hAY ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRR
   INSERT INTO bds.SRV_TABLON
   SELECT st.*
-    FROM ods.SRV_TABLON st INNER JOIN ods.SRV_TABLON_dlt std ON st.id = std.ID AND st.ORDENITEM = std.ORDENITEM;
+    FROM ods.SRV_TABLON st INNER JOIN ods.SRV_TABLON_dlt1 std ON st.id = std.ID AND st.ORDENITEM = std.ORDENITEM;
 
   --CLIENTE-----------------------------
+
+  TRUNCATE TABLE bds.SRV_CLI;
 
   INSERT INTO bds.SRV_CLI
   SELECT DISTINCT 
@@ -80,6 +82,7 @@ Date(YYYYMMDD)      Author              Comments
          NOMBRECLIENTE, 
          DIRECCIONCLIENTE, 
          BONUS
-    FROM STG.TABLON_SRV;
+    FROM STG.SRV_TABLON st;
+--agregar dni valido
 
 GO

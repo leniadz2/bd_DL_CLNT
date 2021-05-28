@@ -49,14 +49,15 @@ AS
         ,st.VENDEDOR                     AS srv_VENDEDOR
         ,st.DNI                          AS srv_DNI
         ,st.RUC                          AS srv_RUC
-        ,CASE
-          WHEN st.DNI IS NULL THEN '0'
-          WHEN st.DNI = '' THEN '0'
-          WHEN LEN(st.DNI) <> 8 THEN '0'
-          WHEN st.DNI like '00%' THEN '0'
-          WHEN (SUBSTRING(st.DNI,1,2)=SUBSTRING(st.DNI,3,2)) and (SUBSTRING(st.DNI,1,2)=SUBSTRING(st.DNI,5,2)) and (SUBSTRING(st.DNI,1,2)=SUBSTRING(st.DNI,7,2)) THEN '0'
-         ELSE '1'
-         END AS srv_DNI_Valido
+--        ,CASE
+--          WHEN st.DNI IS NULL THEN '0'
+--          WHEN st.DNI = '' THEN '0'
+--          WHEN LEN(st.DNI) <> 8 THEN '0'
+--          WHEN st.DNI like '00%' THEN '0'
+--          WHEN (SUBSTRING(st.DNI,1,2)=SUBSTRING(st.DNI,3,2)) and (SUBSTRING(st.DNI,1,2)=SUBSTRING(st.DNI,5,2)) and (SUBSTRING(st.DNI,1,2)=SUBSTRING(st.DNI,7,2)) THEN '0'
+--         ELSE '1'
+--         END AS srv_DNI_Valido
+        ,ods.fc_validaDNI(st.DNI) AS srv_DNI_Valido
         ,st.NOMBRECLIENTE                AS srv_NOMBRECLIENTE
         ,st.DIRECCIONCLIENTE             AS srv_DIRECCIONCLIENTE
         ,st.BONUS                        AS srv_BONUS
