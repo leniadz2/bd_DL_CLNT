@@ -20,6 +20,7 @@ SUMMARY OF CHANGES
 Date(YYYYMMDD)      Author              Comments
 ------------------- ------------------- ------------------------------------------------------------
 20210524            dÁlvarez            creación
+20210601            dÁlvarez            lógica dni valida cliente
 
 ***************************************************************************************************/
 
@@ -53,7 +54,6 @@ Date(YYYYMMDD)      Author              Comments
 
   --TABLON-----------------------------
 
-  --STG
   IF @iVar1 = 1
     BEGIN
       SET @s_fld1 = 'azure';
@@ -66,23 +66,24 @@ Date(YYYYMMDD)      Author              Comments
       EXEC stg.sp_srv_cargaExcel @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
       EXEC ods.sp_srv_carga @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
     END
---ACA  hAY ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-  INSERT INTO bds.SRV_TABLON
-  SELECT st.*
-    FROM ods.SRV_TABLON st INNER JOIN ods.SRV_TABLON_dlt1 std ON st.id = std.ID AND st.ORDENITEM = std.ORDENITEM;
+
+  EXEC bds.sp_srv_tablon;
 
   --CLIENTE-----------------------------
 
   TRUNCATE TABLE bds.SRV_CLI;
 
-  INSERT INTO bds.SRV_CLI
+  INSERT INTO bds.SRV_CLI (DNI, RUC, DNI_Valido, NOMBRECLIENTE, DIRECCIONCLIENTE, BONUS)
   SELECT DISTINCT 
          DNI,
-         RUC, 
+         RUC,
+         NULL, 
          NOMBRECLIENTE, 
          DIRECCIONCLIENTE, 
          BONUS
     FROM STG.SRV_TABLON st;
---agregar dni valido
+
+  UPDATE bds.SRV_CLI
+     SET DNI_Valido = ods.fn_validaDNI(DNI);
 
 GO

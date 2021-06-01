@@ -80,50 +80,22 @@ Date(YYYYMMDD)      Author              Comments
     AND FECHOR = @strgFT
     AND S_FLD1 = @s_fld1;
 
-  TRUNCATE TABLE ods.SRV_TABLON_dlt1;
+TRUNCATE TABLE ods.SRV_TABLON_tmp;
 
-  INSERT INTO ods.SRV_TABLON_dlt1
+  INSERT INTO ods.SRV_TABLON_tmp
+  SELECT st.*
+    FROM bds.SRV_TABLON st
+
+TRUNCATE TABLE ods.SRV_TABLON_dlt;
+
+  INSERT INTO ods.SRV_TABLON_dlt
   SELECT t.*
-  FROM (
-  SELECT st.ID
-        ,st.ORDENITEM
-    FROM ods.SRV_TABLON st
-  EXCEPT
-  SELECT hst.ID
-        ,hst.ORDENITEM
-    FROM ods.H_SRV_TABLON hst INNER JOIN ctl.CONTROL AS c
-      ON hst.FHCARGA = c.S_FLD2
-   WHERE c.FECHOR = (SELECT MAX(FECHOR) FROM ctl.CONTROL WHERE PRCESO = 'CARGATABLA' AND OBJTNM = 'SRV_TABLON')
-    ) AS t;
-
-  TRUNCATE TABLE ods.SRV_TABLON_dlt2;
-
-  INSERT INTO ods.SRV_TABLON_dlt2
-  SELECT t.*
-  FROM (
-  SELECT st.ID
-        ,st.ORDENITEM
-        ,st.DNI
-    FROM ods.SRV_TABLON st
-  EXCEPT
-  SELECT hst.ID
-        ,hst.ORDENITEM
-        ,hst.DNI
-    FROM ods.H_SRV_TABLON hst INNER JOIN ctl.CONTROL AS c
-      ON hst.FHCARGA = c.S_FLD2
-   WHERE c.FECHOR = (SELECT MAX(FECHOR) FROM ctl.CONTROL WHERE PRCESO = 'CARGATABLA' AND OBJTNM = 'SRV_TABLON')
-    ) AS t;
-
-
-DELETE bds.SRV_TABLON
- WHERE ID IN (SELECT id FROM ods.SRV_TABLON_dlt2
-                  EXCEPT
-                  SELECT id FROM ods.SRV_TABLON_dlt1);
-
-TRUNCATE TABLE ods.SRV_TABLON_dlt1;
-
-  INSERT INTO ods.SRV_TABLON_dlt1
-  SELECT DISTINCT ID, ORDENITEM
-    FROM ods.SRV_TABLON_dlt2;
+    FROM (SELECT st.ID
+                ,st.ORDENITEM
+            FROM ods.SRV_TABLON_tmp st
+          EXCEPT
+          SELECT st.ID
+                ,st.ORDENITEM
+            FROM ods.SRV_TABLON st) AS t;
 
 GO

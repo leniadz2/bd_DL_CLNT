@@ -40,15 +40,7 @@ SELECT lc.CODIGOPERSONA
       ,lc.TIPODEDOCUMENTO_D            
       ,lc.NRODOCUMENTO                 
       ,lc.NRORUC
---      ,CASE
---        WHEN lc.NRODOCUMENTO IS NULL THEN '0'
---        WHEN lc.NRODOCUMENTO = '' THEN '0'
---        WHEN LEN(lc.NRODOCUMENTO) <> 8 THEN '0'
---        WHEN lc.NRODOCUMENTO like '00%' THEN '0'
---        WHEN (SUBSTRING(lc.NRODOCUMENTO,1,2)=SUBSTRING(lc.NRODOCUMENTO,3,2)) and (SUBSTRING(lc.NRODOCUMENTO,1,2)=SUBSTRING(lc.NRODOCUMENTO,5,2)) and (SUBSTRING(lc.NRODOCUMENTO,1,2)=SUBSTRING(lc.NRODOCUMENTO,7,2)) THEN '0'
---       ELSE '1'
---       END AS DNI_Valido
-      ,ods.fc_validaDNI(lc.NRODOCUMENTO) AS DNI_Valido
+      ,ods.fn_validaDNI(lc.NRODOCUMENTO) AS DNI_Valido
       ,lc.NOMBRES                      
       ,lc.APELLIDOPATERNO              
       ,lc.APELLIDOMATERNO              

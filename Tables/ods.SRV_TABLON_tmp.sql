@@ -1,4 +1,4 @@
-﻿CREATE TABLE [bds].[SRV_TABLON_bkp] (
+﻿CREATE TABLE [ods].[SRV_TABLON_tmp] (
   [ID] [varchar](30) NULL,
   [NOMBRE] [varchar](50) NULL,
   [RAZONSOCIAL] [varchar](50) NULL,

@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [bds].[SRV_CLI] (
   [DNI] [varchar](11) NULL,
   [RUC] [varchar](11) NULL,
+  [DNI_Valido] [varchar](1) NULL,
   [NOMBRECLIENTE] [varchar](100) NULL,
   [DIRECCIONCLIENTE] [varchar](200) NULL,
   [BONUS] [varchar](20) NULL
