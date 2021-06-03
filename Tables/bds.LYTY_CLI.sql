@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[LYTY_CLI_1] (
+﻿CREATE TABLE [bds].[LYTY_CLI] (
   [CODIGOPERSONA] [varchar](10) NOT NULL,
   [ORDTARJETABONUS] [int] NOT NULL,
   [NUMTARJETABONUS] [varchar](19) NOT NULL,
@@ -9,7 +9,7 @@
   [TIPODEDOCUMENTO_D] [varchar](11) NULL,
   [NRODOCUMENTO] [varchar](15) NULL,
   [NRORUC] [varchar](11) NULL,
-  [DNI_Valido] [varchar](1) NOT NULL,
+  [DNI_cuentaLyty] [int] NULL,
   [NOMBRES] [varchar](100) NULL,
   [APELLIDOPATERNO] [varchar](50) NULL,
   [APELLIDOMATERNO] [varchar](50) NULL,

@@ -147,6 +147,6 @@ AS
         ,lc.HIJ_OS                       AS lty_HIJ_OS
         ,lc.HIJ_NN                       AS lty_HIJ_NN
         ,lc.HIJ_TOT                      AS lty_HIJ_TOT
-  FROM bds.SRV_TABLON st LEFT JOIN ods.LYTY_CLI_3 lc ON st.DNI = lc.NRODOCUMENTO;
+  FROM bds.SRV_TABLON st LEFT JOIN bds.LYTY_CLI lc ON st.DNI = lc.NRODOCUMENTO;
 
 GO

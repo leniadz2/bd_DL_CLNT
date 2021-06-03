@@ -1,10 +1,10 @@
 ﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
 GO
 
-CREATE PROCEDURE [stg].[sp_lty_lytyCli]
+CREATE PROCEDURE [stg].[sp_lty_cliente]
 AS
   /***************************************************************************************************
-  Procedure:          stg.sp_lty_lytyCli
+  Procedure:          stg.sp_lty_cliente
   Create Date:        20210523
   Author:             dÁlvarez
   Description:        carga las tablas de BIBOCL
