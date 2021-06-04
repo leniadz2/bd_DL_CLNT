@@ -99,7 +99,7 @@ TRUNCATE TABLE ods.LYTY_CLI_tmp2;
 INSERT INTO ods.LYTY_CLI_tmp2
 SELECT lc.NRODOCUMENTO                 
       ,COUNT(NRODOCUMENTO) AS DNI_cuentaLyty
-  FROM ods.LYTY_CLI_1 lc
+  FROM ods.LYTY_CLI_tmp1 lc
  WHERE lc.DNI_Valido = 1
  GROUP BY lc.NRODOCUMENTO;
 

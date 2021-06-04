@@ -50,38 +50,42 @@ Date(YYYYMMDD)      Author              Comments
   --SET @iVar1 = 1;-- valor 1 = la carga proviende de azure
   SET @iVar1 = 2;-- valor 2 = la carga proviende de excel
 
+  TRUNCATE TABLE ods.ARA_TRANSAC;
+
   --LYTY-----------------------------
 
---  INSERT INTO ods.ARA_TRANSAC (FUENTE,
---                NUMTARJETABONUS      ,
---                FECHA                ,
---                HORA                 ,
---                NOMBRETIENDA         ,
---                UBICACION            ,
---                CODIGOTIENDA_BONUS   ,
---                PLU_BONUS            ,
---                CANTIDADUNIDADESITEM ,
---                PRECIOTOTALITEM      ,
---                TOTALVALORVENTABRUTA)
---      SELECT 'LYTY'        ,
---              NUMTARJETABONUS     ,
---              FECHATRANSACCION_CAB,
---              HORATRANSACCION_CAB ,
---              CODIGODELOCAL       ,
---              CODIGODEPARTICIPANTE,
---              CODIGODEPARTICIPANTE,
---              PLU                 ,
---              CANTIDADNUM         ,
---              MONTOPARCIALNUM     ,
---              MONTOTOTALNUM       )
---  --**falta el FROM
+  INSERT INTO ods.ARA_TRANSAC (FUENTE,
+                DNI,
+                NUMTARJETABONUS      ,
+                FECHA                ,
+                HORA                 ,
+                NOMBRETIENDA         ,
+                UBICACION            ,
+                CODIGOTIENDA_BONUS   ,
+                PLU_BONUS            ,
+                CANTIDADUNIDADESITEM ,
+                PRECIOTOTALITEM      ,
+                TOTALVALORVENTABRUTA)
+      SELECT 'LYTY'        ,
+              lc.NRODOCUMENTO,
+              lt.NUMTARJETABONUS     ,
+              lt.FECHATRANSACCION_CAB,
+              lt.HORATRANSACCION_CAB ,
+              lt.CODIGODELOCAL       ,
+              lt.CODIGODEPARTICIPANTE,
+              lt.CODIGODEPARTICIPANTE,
+              lt.PLU                 ,
+              lt.CANTIDADNUM         ,
+              lt.MONTOPARCIALNUM     ,
+              lt.MONTOTOTALNUM       
+  FROM stg.LYTY_TRANSACCION lt LEFT JOIN bds.LYTY_CLI lc ON lt.NUMTARJETABONUS = lc.NUMTARJETABONUS;
 
   --ICG------------------------------
 
   INSERT INTO ods.ARA_TRANSAC (fuente,
                 DNI,
                 RUC,
-                COD_CLIENTE_ICG,--chekar!
+                COD_CLIENTE_ICG,
                 FECHA,
                 NEGOCIO,
                 NOMBRETIENDA,
