@@ -27,6 +27,7 @@ AS
   ------------------- ------------------- ------------------------------------------------------------
   20210521            dÁlvarez            creación
   20210601            dÁlvarez            se unifican dos SP como mejora (se renombra sp_srvlty_SAC)
+  20210610            dÁlvarez            se adiciona lógica del delta
   
   ***************************************************************************************************/
 
@@ -40,14 +41,18 @@ AS
 
   /*---LTY---------
   stg.LYTY_CLI
-  ods.LYTY_CLI_1
-  ods.LYTY_CLI_2
-  ods.LYTY_CLI_3 */
-  EXEC stg.sp_lty_lytyCli;
-  EXEC ods.sp_lty_lytyCli;
+  ods.LYTY_CLI_tmp1
+  ods.LYTY_CLI_tmp2 */
+  EXEC stg.sp_lty_cliente;
+  EXEC ods.sp_lty_cliente;
 
   /*---SRV/LTY-----
   bds.SRV_LYTY   */
+
+  TRUNCATE TABLE bds.SRV_LYTY_tmp;
+
+  INSERT INTO bds.SRV_LYTY_tmp
+  SELECT * FROM bds.SRV_LYTY sl;
 
   TRUNCATE TABLE bds.SRV_LYTY;
 
@@ -148,5 +153,13 @@ AS
         ,lc.HIJ_NN                       AS lty_HIJ_NN
         ,lc.HIJ_TOT                      AS lty_HIJ_TOT
   FROM bds.SRV_TABLON st LEFT JOIN bds.LYTY_CLI lc ON st.DNI = lc.NRODOCUMENTO;
+
+  TRUNCATE TABLE bds.SRV_LYTY_dlt;
+
+  INSERT INTO bds.SRV_LYTY_dlt
+  SELECT * FROM bds.SRV_LYTY_tmp
+  EXCEPT
+  SELECT * FROM bds.SRV_LYTY;
+
 
 GO

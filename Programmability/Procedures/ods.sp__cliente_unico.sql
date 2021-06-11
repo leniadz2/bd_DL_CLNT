@@ -203,4 +203,21 @@ Date(YYYYMMDD)      Author              Comments
     FROM stg.MKT_CLI
    WHERE ods.fn_validaDNI(DOCUMENTOIDENTIFICACION) = 1;
 
+  --SAP------------------------------
+
+  INSERT INTO ods.ADI_CLIENTE( FUENTE,
+                               NRODOCUMENTO     ,
+                               NOMBRECLIENTE    ,
+                               DIRECCION1       ,
+                               DISTRITO         ,
+                               TELEFONO1        )
+SELECT 'SAP'
+      ,NIF
+      ,NOMBRE
+      ,CALLE
+      ,DISTRITO
+      ,TELEFONO
+  FROM ods.SAP_CLI
+ WHERE ods.fn_validaDNI(NIF) = 1;
+
 GO
