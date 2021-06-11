@@ -14,6 +14,10 @@ Used By:            BI
 Parameter(s):       none
 Log:                ctl.CONTROL
 Prerequisites:      Azure debe estar encendido (ccordinar con GVillacorta)
+                    **NOTA**
+                      Previamente se debe cargar en BD_SRV una importación de tabla con el dbForge
+                      desde azure
+                    **
 ****************************************************************************************************
 SUMMARY OF CHANGES
 Date(YYYYMMDD)      Author              Comments

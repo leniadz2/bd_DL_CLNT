@@ -8,12 +8,16 @@ AS
   Author:             dÁlvarez
   Description:        todo el proceso de tablas LTY/SRV/SRVLTY
                       carga la tabla final (a ser ingestada por SAC).
-                      posteriormente la tabla se exporta en CSV usando dbeaver con las sgtes caracteristicas:
-                        delimeter: |
+                      posteriormente la tabla se exporta en CSV usando *> dbeaver <* con las sgtes caracteristicas:
+                        delimiter: |
                         quote characters: "
                         quote always: string
                         null string: vacio
                         encoding: UTF-8
+
+                      20210911: se debe exportar: bds.SRV_LYTY_dlt y guardar como SRV_LYTY.csv
+                      **NOTA:: aquellos clientes con CODIGOPERSONA = '9999999999' provienen de un archivo plano externo
+
   Call by:            none
   Affected table(s):  bds.SRV_LYTY
   Used By:            BI
@@ -27,11 +31,11 @@ AS
   ------------------- ------------------- ------------------------------------------------------------
   20210521            dÁlvarez            creación
   20210601            dÁlvarez            se unifican dos SP como mejora (se renombra sp_srvlty_SAC)
-  20210610            dÁlvarez            se adiciona lógica del delta
+  20210610            dÁlvarez            se adiciona lógica del delta (para cargar a SAC)
   
   ***************************************************************************************************/
 
-  /*---SRV----------
+  /*---SRV--------------------------------------------------------------------------------------------
   stg.SRV_TABLON
   ods.SRV_TABLON
   ods.H_SRV_TABLON
@@ -39,14 +43,19 @@ AS
   bds.SRV_TABLON  */
   EXEC bds.sp_srv;  
 
-  /*---LTY---------
+  /*---LTY--------------------------------------------------------------------------------------------
   stg.LYTY_CLI
+  ods.LYTY_CLI_tmp0 (archivo externo)
   ods.LYTY_CLI_tmp1
-  ods.LYTY_CLI_tmp2 */
+  ods.LYTY_CLI_tmp2
+  ods.LYTY_CLI_tmp3
+  ods.LYTY_CLI_tmp4
+  bds.LYTY_CLI   */
   EXEC stg.sp_lty_cliente;
   EXEC ods.sp_lty_cliente;
+  EXEC bds.sp_lty_cliente;
 
-  /*---SRV/LTY-----
+  /*---SRV/LTY----------------------------------------------------------------------------------------
   bds.SRV_LYTY   */
 
   TRUNCATE TABLE bds.SRV_LYTY_tmp;
@@ -154,12 +163,21 @@ AS
         ,lc.HIJ_TOT                      AS lty_HIJ_TOT
   FROM bds.SRV_TABLON st LEFT JOIN bds.LYTY_CLI lc ON st.DNI = lc.NRODOCUMENTO;
 
+  --tabla bds.SRV_LYTY_dlt para enviar a SAC (renombrar SRV_LYTY.csv)
   TRUNCATE TABLE bds.SRV_LYTY_dlt;
 
   INSERT INTO bds.SRV_LYTY_dlt
-  SELECT * FROM bds.SRV_LYTY_tmp
+  SELECT * FROM bds.SRV_LYTY
   EXCEPT
-  SELECT * FROM bds.SRV_LYTY;
+  SELECT * FROM bds.SRV_LYTY_tmp;
 
+----work around
+--WITH wrkard AS (SELECT DISTINCT srv_ID 
+--                  FROM bds.SRV_LYTY
+--                 WHERE lty_CODIGOPERSONA = '9999999999')
+--INSERT INTO bds.SRV_LYTY_dlt
+--SELECT sl.* 
+--  FROM bds.SRV_LYTY sl INNER JOIN wrkard 
+--    ON sl.srv_ID = wrkard.srv_ID;
 
 GO
