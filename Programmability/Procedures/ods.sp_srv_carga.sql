@@ -49,7 +49,7 @@ Date(YYYYMMDD)      Author              Comments
         ,IIF(RUC                    ='',NULL,RUC                    )
         ,IIF(NOMBRECLIENTE          ='',NULL,UPPER(NOMBRECLIENTE)   )
         ,IIF(DIRECCIONCLIENTE       ='',NULL,UPPER(DIRECCIONCLIENTE))
-        ,IIF(BONUS                  ='',NULL,BONUS                  )
+        ,IIF(BONUS ='-',NULL,IIF(BONUS ='',NULL,BONUS))
         ,IIF(MONEDA                 ='',NULL,MONEDA                 )
         ,IIF(MEDIOPAGO              ='',NULL,MEDIOPAGO              )
         ,TOTALVALORVENTABRUTA

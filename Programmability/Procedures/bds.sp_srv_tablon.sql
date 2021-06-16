@@ -23,7 +23,9 @@ Date(YYYYMMDD)      Author              Comments
 ***************************************************************************************************/
 
 TRUNCATE TABLE bds.SRV_TABLON;
-    
+
+DROP INDEX bds.SRV_TABLON.IX1_SRV_TABLON;
+
 --cargado anteriormente y no en la nueva carga
 INSERT INTO bds.SRV_TABLON
 SELECT stt.*
@@ -34,5 +36,8 @@ SELECT stt.*
 INSERT INTO bds.SRV_TABLON
 SELECT st.*
   FROM ods.SRV_TABLON st;
+
+CREATE INDEX IX1_SRV_TABLON
+ON bds.SRV_TABLON(DNI);
 
 GO
