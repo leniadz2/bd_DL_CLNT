@@ -1,7 +1,7 @@
 ﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
 GO
 
-CREATE PROCEDURE [bds].[sp_srv]
+CREATE PROCEDURE [bds].[sp_srv_v1]
 AS
 /***************************************************************************************************
 Procedure:          [bds].[sp_srv]
@@ -59,30 +59,30 @@ Date(YYYYMMDD)      Author              Comments
     BEGIN
       SET @s_fld1 = 'azure';
       EXEC stg.sp_srv_cargaAzure @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
-      EXEC ods.sp_srv_carga @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
+      EXEC ods.sp_srv_carga_v1 @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
     END
   ELSE IF @iVar1 = 2
     BEGIN
       SET @s_fld1 = 'excel';
       EXEC stg.sp_srv_cargaExcel @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
-      EXEC ods.sp_srv_carga @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
+      EXEC ods.sp_srv_carga_v1 @prceso,@objtnm,@strgFT,@s_fld1,@s_fld2,@strgTim;
     END
 
-  EXEC bds.sp_srv_tablon;
-
-  --CLIENTE-----------------------------
-
-  TRUNCATE TABLE bds.SRV_CLI;
-
-  INSERT INTO bds.SRV_CLI (DNI, RUC, CE, DUIval, NOMBRECLIENTE, DIRECCIONCLIENTE, BONUS)
-  SELECT DISTINCT 
-         DNI,
-         RUC,
-         CE,
-         DUIval,
-         NOMBRECLIENTE, 
-         DIRECCIONCLIENTE, 
-         BONUS
-    FROM bds.SRV_TABLON st;
+--  EXEC bds.sp_srv_tablon_v1;
+--
+--  --CLIENTE-----------------------------
+--
+--  TRUNCATE TABLE bds.SRV_CLI;
+--
+--  INSERT INTO bds.SRV_CLI (DNI, RUC, CE, DUIval, NOMBRECLIENTE, DIRECCIONCLIENTE, BONUS)
+--  SELECT DISTINCT 
+--         DNI,
+--         RUC,
+--         CE,
+--         DUIval,
+--         NOMBRECLIENTE, 
+--         DIRECCIONCLIENTE, 
+--         BONUS
+--    FROM bds.SRV_TABLON st;
 
 GO

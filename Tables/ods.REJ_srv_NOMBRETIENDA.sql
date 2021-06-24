@@ -1,0 +1,6 @@
+﻿CREATE TABLE [ods].[REJ_srv_NOMBRETIENDA] (
+  [srv_NOMBRETIENDA] [varchar](50) NULL,
+  [CONTADOR] [int] NULL
+)
+ON [PRIMARY]
+GO

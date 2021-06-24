@@ -10,6 +10,9 @@ AS BEGIN
                    WHEN @dni IS NULL THEN '0'
                    WHEN @dni = '' THEN '0'
                    WHEN LEN(@dni) <> 8 THEN '0'
+                   WHEN @dni = '12345678' THEN '0'
+                   WHEN @dni = '01234567' THEN '0'
+                   WHEN @dni = '78945612' THEN '0'
                    WHEN @dni like '00%' THEN '0'
                    WHEN REPLACE
                         (REPLACE
