@@ -86,9 +86,21 @@ TRUNCATE TABLE ods.SRV_TABLON_tmp_v1;
   SELECT st.*
     FROM bds.SRV_TABLON_v1 st
 
-TRUNCATE TABLE ods.SRV_TABLON_dlt;
+--TRUNCATE TABLE ods.SRV_TABLON_dlt;
+--
+--  INSERT INTO ods.SRV_TABLON_dlt
+--  SELECT t.*
+--    FROM (SELECT st.ID
+--                ,st.ORDENITEM
+--            FROM ods.SRV_TABLON_tmp_v1 st
+--          EXCEPT
+--          SELECT st.ID
+--                ,st.ORDENITEM
+--            FROM ods.SRV_TABLON st) AS t;
 
-  INSERT INTO ods.SRV_TABLON_dlt
+TRUNCATE TABLE ods.SRV_TABLON_dlt_excptIZ;
+
+  INSERT INTO ods.SRV_TABLON_dlt_excptIZ
   SELECT t.*
     FROM (SELECT st.ID
                 ,st.ORDENITEM
@@ -97,5 +109,31 @@ TRUNCATE TABLE ods.SRV_TABLON_dlt;
           SELECT st.ID
                 ,st.ORDENITEM
             FROM ods.SRV_TABLON st) AS t;
+
+TRUNCATE TABLE ods.SRV_TABLON_dlt_intrsct;
+
+  INSERT INTO ods.SRV_TABLON_dlt_intrsct
+  SELECT t.*
+    FROM (SELECT st.ID
+                ,st.ORDENITEM
+            FROM ods.SRV_TABLON st
+          INTERSECT
+          SELECT st.ID
+                ,st.ORDENITEM
+            FROM ods.SRV_TABLON_tmp_v1 st
+          ) AS t;
+
+TRUNCATE TABLE ods.SRV_TABLON_dlt_excptDE;
+
+  INSERT INTO ods.SRV_TABLON_dlt_excptDE
+  SELECT t.*
+    FROM (SELECT st.ID
+                ,st.ORDENITEM
+            FROM ods.SRV_TABLON st
+          EXCEPT
+          SELECT st.ID
+                ,st.ORDENITEM
+            FROM ods.SRV_TABLON_tmp_v1 st
+          ) AS t;
 
 GO

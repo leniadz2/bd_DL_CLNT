@@ -1,4 +1,4 @@
-﻿CREATE TABLE [bds].[SRVLYTY] (
+﻿CREATE TABLE [bds].[SRVLYTY_bueno] (
   [srv_ID] [varchar](30) NULL,
   [srv_NOMBRE] [varchar](50) NULL,
   [srv_RAZONSOCIAL] [varchar](50) NULL,
@@ -90,4 +90,9 @@
   [com_SubGafo] [varchar](100) NULL
 )
 ON [PRIMARY]
+GO
+
+CREATE INDEX [idx_SRVLYTY]
+  ON [bds].[SRVLYTY_bueno] ([srv_SERIE], [srv_NUMEROTRANSACCION])
+  ON [PRIMARY]
 GO

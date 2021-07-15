@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[SRV_TABLON_tmp] (
+﻿CREATE TABLE [ods].[SRV_TABLON_regNews_v1] (
   [ID] [varchar](30) NULL,
   [NOMBRE] [varchar](50) NULL,
   [RAZONSOCIAL] [varchar](50) NULL,
@@ -17,8 +17,6 @@
   [VENDEDOR] [varchar](20) NULL,
   [DNI] [varchar](11) NULL,
   [RUC] [varchar](11) NULL,
-  [CE] [varchar](11) NULL,
-  [DUIval] [varchar](1) NULL,
   [NOMBRECLIENTE] [varchar](100) NULL,
   [DIRECCIONCLIENTE] [varchar](200) NULL,
   [BONUS] [varchar](20) NULL,
@@ -38,9 +36,4 @@
   [FHCARGA] [varchar](14) NULL
 )
 ON [PRIMARY]
-GO
-
-CREATE INDEX [IX1_SRV_TABLON_tmp]
-  ON [ods].[SRV_TABLON_tmp] ([ID], [ORDENITEM])
-  ON [PRIMARY]
 GO

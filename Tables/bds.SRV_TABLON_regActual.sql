@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ods].[SRV_TABLON_tmp] (
+﻿CREATE TABLE [bds].[SRV_TABLON_regActual] (
   [ID] [varchar](30) NULL,
   [NOMBRE] [varchar](50) NULL,
   [RAZONSOCIAL] [varchar](50) NULL,
@@ -38,9 +38,4 @@
   [FHCARGA] [varchar](14) NULL
 )
 ON [PRIMARY]
-GO
-
-CREATE INDEX [IX1_SRV_TABLON_tmp]
-  ON [ods].[SRV_TABLON_tmp] ([ID], [ORDENITEM])
-  ON [PRIMARY]
 GO
